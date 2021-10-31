@@ -2,8 +2,8 @@
   <div>
     <div class="mt-16">
       <v-app>
-        <v-container class="grey lighten-5 mb-6 mt-6">
-          <v-main>
+        <v-container class="grey lighten-5 mb-6 mt-6 register-div">
+          <v-main class="px-10">
             <div>
               <v-tabs
                 v-model="tab"
@@ -87,3 +87,13 @@ export default {
   }),
 };
 </script>
+<style>
+.register-div {
+  max-width: 60%;
+}
+@media (min-width: 0px) and (max-width: 1000px) {
+  .register-div {
+    max-width: 100%;
+  }
+}
+</style>

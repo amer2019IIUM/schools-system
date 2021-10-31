@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pa-10">
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-text-field
         v-model="email"
