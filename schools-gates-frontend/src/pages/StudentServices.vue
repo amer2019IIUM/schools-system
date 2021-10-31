@@ -7,10 +7,10 @@
           <v-col :align="'center'">
             <v-card class="mx-auto">
               <div class="white--text teal align-center" height="200px">
-                <div class="pt-10 pb-10"><h1>بوابة معلمي الانتساب</h1></div>
+                <div class="pt-10 pb-10"><h1>بوابة طلاب الانتساب</h1></div>
               </div>
 
-              <h4 class="pt-5 pb-5">مرحبا بكم في بوابة معلمي الانتساب</h4>
+              <h4 class="pt-5 pb-5">مرحبا بكم في بوابة طلاب الانتساب</h4>
             </v-card>
           </v-col>
         </v-row>
@@ -57,10 +57,10 @@ export default {
   name: "TeacherServices",
   data: () => ({
     services: [
-      "رفع التكليفات للطلاب",
+      "معرفة التكليفات",
       "التعاميم والاعلانات",
       "اللقاءات والاجتماعات",
-      "متابعة التكليفات",
+      "إرسال التكليفات",
       "قسم الاستفارات",
       "جداول الاختبارات",
     ],

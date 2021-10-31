@@ -2,7 +2,7 @@
   <div>
     <v-app>
       <navbar />
-      <teacher-services />
+      <router-view></router-view>
       <Footer />
     </v-app>
   </div>
@@ -11,9 +11,8 @@
 <script>
 import Footer from "./layout/Footer.vue";
 import Navbar from "./layout/Navbar.vue";
-import TeacherServices from "./pages/TeacherServices.vue";
 export default {
-  components: { Navbar, Footer, TeacherServices },
+  components: { Navbar, Footer },
   name: "App",
   data: () => ({}),
 };
