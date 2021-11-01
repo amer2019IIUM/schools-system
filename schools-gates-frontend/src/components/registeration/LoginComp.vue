@@ -40,6 +40,7 @@
 </template>
 <script>
 export default {
+   name: "LoginComp",
   data: () => ({
     valid: true,
     showPass: false,

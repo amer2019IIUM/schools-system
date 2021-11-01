@@ -35,6 +35,7 @@
 import LoginComp from "../components/registeration/LoginComp.vue";
 import RegisterComp from "../components/registeration/RegisterComp.vue";
 export default {
+  name: "RegisterPage",
   components: { LoginComp, RegisterComp },
   computed: {
     passwordMatch() {
