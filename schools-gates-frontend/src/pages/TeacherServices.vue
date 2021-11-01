@@ -73,6 +73,17 @@
                         >
                           عرض
                         </v-btn>
+                        <!-- Upload meeting Dialog service btn -->
+                        <v-btn
+                          class="mt-4 mb-4"
+                          v-if="index == 3"
+                          dark
+                          depressed
+                          color="teal"
+                          @click="meetingDialog = !meetingDialog"
+                        >
+                          عرض
+                        </v-btn>
                         <!-- -->
                         <!-- Upload inquiries  Dialog service btn -->
                         <v-btn
