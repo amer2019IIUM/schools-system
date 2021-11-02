@@ -18,8 +18,6 @@ class CreateReportsTable extends Migration
             $table->string('body');
             $table->integer('reportable_id');
             $table->string('reportable_type')->comment('student, teacher');
-            $table->unsignedBigInteger('reportable_id');
-            $table->string('reportable_type');
             $table->index(['reportable_id', 'reportable_type']);
             $table->timestamps();
         });

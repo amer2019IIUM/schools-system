@@ -20,9 +20,7 @@ class CreateInquiriesTable extends Migration
             $table->string('inquiryable_type')->comment('course, grade, center');
             $table->integer('administrator_id')->nullable();
             $table->integer('doable_id')->nullable();
-            $table->integer('doable_type')->nullable()->comment('teacher, student');
-            $table->unsignedBigInteger('doable_id');
-            $table->string('doable_type');
+            $table->string('doable_type')->nullable()->comment('teacher, student');
             $table->timestamps();
         });
     }
