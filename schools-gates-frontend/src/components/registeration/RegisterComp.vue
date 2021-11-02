@@ -140,6 +140,7 @@
 </template>
 <script>
 export default {
+  name: "RegisterComp",
   data: () => ({
     valid: true,
     showPass: false,
