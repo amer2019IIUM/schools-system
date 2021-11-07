@@ -9,7 +9,7 @@ import MeetingS from '../components/student-forms/MeetingS.vue'
 import StudentExamSchedule from '../components/student-forms/StudentExamSchedule.vue'
 import SubmitAssignmentS from '../components/student-forms/SubmitAssignmentS.vue'
 import CheckAssigmentT from '../components/teacher-forms/CheckAssigmentT.vue'
-
+import TeacherProfile from "../pages/TeacherProfile.vue"
 
 
 Vue.use(VueRouter)
@@ -78,6 +78,11 @@ const routes = [
     path: '/check-assigments',
     name: 'check-assigments',
     component: CheckAssigmentT
+  },
+  {
+    path: '/teacher-profile',
+    name: 'teacher-profile',
+    component: TeacherProfile
   },
 
 ]
