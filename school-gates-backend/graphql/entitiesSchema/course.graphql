@@ -1,0 +1,79 @@
+#extend type Mutation {
+#    createCourse(input: CreateCourseInput! @spread): Course @create
+#
+#    updateCourse(id: ID!, input: UpdateCourseInput! @spread): Course @update
+#
+#    deleteCourse(id: ID!): Course @delete
+#
+#    restoreCourse(id: ID!): Course @restore
+#}
+extend type Query {
+    courses (
+        orderBy: _ @orderBy(columnsEnum: "CourseColumns")
+        where: _ @whereConditions(columnsEnum: "CourseColumns")
+        assignments: _ @whereHasConditions(columnsEnum: "AssignmentColumns")
+    ): [Course!]! @paginate(type: PAGINATOR, defaultCount: 10)
+
+    course (
+        where: _ @whereConditions(columnsEnum: "CourseColumns")
+        assignments: _ @whereHasConditions(columnsEnum: "AssignmentColumns")
+    ): Course @first
+}
+
+type Course {
+    id: ID
+    name: String
+    created_at: DateTime
+    updated_at: DateTime
+    assignments: [Assignment!]! @hasMany(type: PAGINATOR, defaultCount: 10)
+    teachers: [Teacher!]! @belongsToMany(type: PAGINATOR, defaultCount: 10)
+    grade: Grade @belongsTo
+    inquiries: [Inquiry!]! @morphMany(type: PAGINATOR, defaultCount: 10)
+}
+
+enum CourseColumns {
+    ID
+    NAME
+    CREATED_AT
+    UPDATED_AT
+}
+
+#input CreateCourseInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    negotiable: Boolean
+#    status: Int
+#    user: CreateUserBelongsTo
+#    taxonomyContents: CreateTaxonomyContentBelongsToMany
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input UpdateCourseInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input CreateUserBelongsTo {
+#    connect: ID
+#}
+#input CreateTaxonomyContentBelongsToMany {
+#    connect: [ID!]
+#}
+#input CreateAttachmentBelongsToMany {
+#    connect: [ID!]
+#    create: [CreateAttachmentHasManyInputs]
+#    delete: [ID!]
+#    connect: [ID!]
+#    disconnect: [ID!]
+#}
+#input DeleteCourseInput {
+#    delete: ID
+#}
+#input CreateAttachmentHasManyInputs {
+#    path: String
+#    disk_name: String
+#    type: AttachmentTypes!
+#    file_name: String
+#    thumbnail: Boolean
+#}

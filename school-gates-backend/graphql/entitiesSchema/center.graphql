@@ -1,0 +1,82 @@
+#extend type Mutation {
+#    createCenter(input: CreateCenterInput! @spread): Center @create
+#
+#    updateCenter(id: ID!, input: UpdateCenterInput! @spread): Center @update
+#
+#    deleteCenter(id: ID!): Center @delete
+#
+#    restoreCenter(id: ID!): Center @restore
+#}
+
+extend type Query {
+    centers (
+        orderBy: _ @orderBy(columnsEnum: "CenterColumns")
+        where: _ @whereConditions(columnsEnum: "CenterColumns")
+        grades: _ @whereHasConditions(columnsEnum: "GradeColumns")
+    ): [Center!]! @paginate(type: PAGINATOR, defaultCount: 10)
+
+    center (
+        where: _ @whereConditions(columnsEnum: "CenterColumns")
+        grades: _ @whereHasConditions(columnsEnum: "GradeColumns")
+    ): Center @first
+}
+
+type Center {
+    id: ID
+    name: String
+    country: String
+    created_at: DateTime
+    updated_at: DateTime
+    grades: [Grade!]! @hasMany(type: PAGINATOR, defaultCount: 10)
+    teachers: [Teacher!]! @belongsToMany(type: PAGINATOR, defaultCount: 10)
+    school: School @belongsTo
+    inquiries: [Inquiry!]! @morphMany(type: PAGINATOR, defaultCount: 10)
+}
+
+enum CenterColumns {
+    ID
+    NAME
+    COUNTRY
+    CREATED_AT
+    UPDATED_AT
+}
+
+#input CreateCenterInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    negotiable: Boolean
+#    status: Int
+#    user: CreateUserBelongsTo
+#    taxonomyContents: CreateTaxonomyContentBelongsToMany
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input UpdateCenterInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input CreateUserBelongsTo {
+#    connect: ID
+#}
+#input CreateTaxonomyContentBelongsToMany {
+#    connect: [ID!]
+#}
+#input CreateAttachmentBelongsToMany {
+#    connect: [ID!]
+#    create: [CreateAttachmentHasManyInputs]
+#    delete: [ID!]
+#    connect: [ID!]
+#    disconnect: [ID!]
+#}
+#input DeleteCenterInput {
+#    delete: ID
+#}
+#input CreateAttachmentHasManyInputs {
+#    path: String
+#    disk_name: String
+#    type: AttachmentTypes!
+#    file_name: String
+#    thumbnail: Boolean
+#}

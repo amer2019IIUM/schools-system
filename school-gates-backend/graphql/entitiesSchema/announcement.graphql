@@ -1,0 +1,85 @@
+#extend type Mutation {
+#    createAnnouncement(input: CreateAnnouncementInput! @spread): Announcement @create
+#
+#    updateAnnouncement(id: ID!, input: UpdateAnnouncementInput! @spread): Announcement @update
+#
+#    deleteAnnouncement(id: ID!): Announcement @delete
+#
+#    restoreAnnouncement(id: ID!): Announcement @restore
+#}
+extend type Query {
+    announcements (
+        orderBy: _ @orderBy(columnsEnum: "AnnouncementColumns")
+        where: _ @whereConditions(columnsEnum: "AnnouncementColumns")
+    ): [Announcement!]! @paginate(type: PAGINATOR, defaultCount: 10)
+
+    announcement (
+        where: _ @whereConditions(columnsEnum: "AnnouncementColumns")
+    ): Announcement @first
+}
+
+type Announcement {
+    id: ID!
+    body: String
+    path: String!
+    type: AnnouncementType
+    created_at: DateTime
+    updated_at: DateTime
+    teacher: Teacher @belongsTo
+}
+
+enum AnnouncementType {
+    examinations
+    schedule
+    general
+    meeting
+}
+
+enum AnnouncementColumns {
+    ID
+    BODY
+    PATH
+    TYPE
+    CREATED_AT
+    UPDATED_AT
+}
+
+#input CreateAnnouncementInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    negotiable: Boolean
+#    status: Int
+#    user: CreateUserBelongsTo
+#    taxonomyContents: CreateTaxonomyContentBelongsToMany
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input UpdateAnnouncementInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input CreateUserBelongsTo {
+#    connect: ID
+#}
+#input CreateTaxonomyContentBelongsToMany {
+#    connect: [ID!]
+#}
+#input CreateAttachmentBelongsToMany {
+#    connect: [ID!]
+#    create: [CreateAttachmentHasManyInputs]
+#    delete: [ID!]
+#    connect: [ID!]
+#    disconnect: [ID!]
+#}
+#input DeleteAnnouncementInput {
+#    delete: ID
+#}
+#input CreateAttachmentHasManyInputs {
+#    path: String
+#    disk_name: String
+#    type: AttachmentTypes!
+#    file_name: String
+#    thumbnail: Boolean
+#}

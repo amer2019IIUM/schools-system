@@ -1,0 +1,97 @@
+#extend type Mutation {
+#    createStudent(input: CreateStudentInput! @spread): Student @create
+#
+#    updateStudent(id: ID!, input: UpdateStudentInput! @spread): Student @update
+#
+#    deleteStudent(id: ID!): Student @delete
+#
+#    restoreStudent(id: ID!): Student @restore
+#}
+extend type Query {
+    students (
+        orderBy: _ @orderBy(columnsEnum: "StudentColumns")
+        where: _ @whereConditions(columnsEnum: "StudentColumns")
+        submissions: _ @whereHasConditions(columnsEnum: "SubmissionColumns")
+    ): [Student!]! @paginate(type: PAGINATOR, defaultCount: 10)
+
+    student (
+        where: _ @whereConditions(columnsEnum: "StudentColumns")
+        submissions: _ @whereHasConditions(columnsEnum: "SubmissionColumns")
+    ): Student @first
+}
+
+type Student {
+    id: ID
+    name: String
+    passport: String
+    teams_email: String
+    gender: Gender
+    password: String
+    city: String
+    phone_number_1: Int
+    phone_number_2: Int
+    platform_report: String
+    personal_email: String
+    created_at: DateTime
+    updated_at: DateTime
+    grade: Grade @belongsTo
+    submissions: [Submission!]! @hasMany(type: PAGINATOR, defaultCount: 10)
+    reports: [Report!]! @morphMany(type: PAGINATOR, defaultCount: 10)
+    inquiries: [Inquiry!]! @morphMany(type: PAGINATOR, defaultCount: 10)
+}
+
+enum StudentColumns {
+    ID
+    NAME
+    PASSPORT
+    TEAMS_EMAIL
+    GENDER
+    PASSWORD
+    CITY
+    PHONE_NUMBER_1
+    PHONE_NUMBER_2
+    PLATFORM_REPORT
+    PERSONAL_EMAIL
+    CREATED_AT
+    UPDATED_AT
+}
+
+#input CreateStudentInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    negotiable: Boolean
+#    status: Int
+#    user: CreateUserBelongsTo
+#    taxonomyContents: CreateTaxonomyContentBelongsToMany
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input UpdateStudentInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input CreateUserBelongsTo {
+#    connect: ID
+#}
+#input CreateTaxonomyContentBelongsToMany {
+#    connect: [ID!]
+#}
+#input CreateAttachmentBelongsToMany {
+#    connect: [ID!]
+#    create: [CreateAttachmentHasManyInputs]
+#    delete: [ID!]
+#    connect: [ID!]
+#    disconnect: [ID!]
+#}
+#input DeleteStudentInput {
+#    delete: ID
+#}
+#input CreateAttachmentHasManyInputs {
+#    path: String
+#    disk_name: String
+#    type: AttachmentTypes!
+#    file_name: String
+#    thumbnail: Boolean
+#}

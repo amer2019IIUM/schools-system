@@ -1,0 +1,78 @@
+#extend type Mutation {
+#    createInquiry(input: CreateInquiryInput! @spread): Inquiry @create
+#
+#    updateInquiry(id: ID!, input: UpdateInquiryInput! @spread): Inquiry @update
+#
+#    deleteInquiry(id: ID!): Inquiry @delete
+#
+#    restoreInquiry(id: ID!): Inquiry @restore
+#}
+extend type Query {
+    inquiries (
+        orderBy: _ @orderBy(columnsEnum: "InquiryColumns")
+        where: _ @whereConditions(columnsEnum: "InquiryColumns")
+    ): [Inquiry!]! @paginate(type: PAGINATOR, defaultCount: 10)
+
+    inquiry (
+        where: _ @whereConditions(columnsEnum: "InquiryColumns")
+    ): Inquiry @first
+}
+
+type Inquiry {
+    id: ID!
+    body: String
+    created_at: DateTime
+    updated_at: DateTime
+    administrator: Administrator @belongsTo
+    inquiryable: Inquiryable @morphTo
+    createable: Createable @morphTo
+}
+union Createable = Teacher | Student
+union Inquiryable = Center | Course | Grade
+
+enum InquiryColumns {
+    ID
+    BODY
+    CREATED_AT
+    UPDATED_AT
+}
+
+#input CreateInquiryInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    negotiable: Boolean
+#    status: Int
+#    user: CreateUserBelongsTo
+#    taxonomyContents: CreateTaxonomyContentBelongsToMany
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input UpdateInquiryInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input CreateUserBelongsTo {
+#    connect: ID
+#}
+#input CreateTaxonomyContentBelongsToMany {
+#    connect: [ID!]
+#}
+#input CreateAttachmentBelongsToMany {
+#    connect: [ID!]
+#    create: [CreateAttachmentHasManyInputs]
+#    delete: [ID!]
+#    connect: [ID!]
+#    disconnect: [ID!]
+#}
+#input DeleteInquiryInput {
+#    delete: ID
+#}
+#input CreateAttachmentHasManyInputs {
+#    path: String
+#    disk_name: String
+#    type: AttachmentTypes!
+#    file_name: String
+#    thumbnail: Boolean
+#}

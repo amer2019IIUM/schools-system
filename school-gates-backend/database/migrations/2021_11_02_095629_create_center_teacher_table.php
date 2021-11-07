@@ -14,8 +14,10 @@ class CreateCenterTeacherTable extends Migration
     public function up()
     {
         Schema::create('center_teacher', function (Blueprint $table) {
+            $table->increments('id');
             $table->foreignId('center_id');
             $table->foreignId('teacher_id');
+            $table->timestamps();
         });
     }
 

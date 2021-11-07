@@ -1,0 +1,79 @@
+#extend type Mutation {
+#    createAssignment(input: CreateAssignmentInput! @spread): Assignment @create
+#
+#    updateAssignment(id: ID!, input: UpdateAssignmentInput! @spread): Assignment @update
+#
+#    deleteAssignment(id: ID!): Assignment @delete
+#
+#    restoreAssignment(id: ID!): Assignment @restore
+#}
+extend type Query {
+    assignments (
+        orderBy: _ @orderBy(columnsEnum: "AssignmentColumns")
+        where: _ @whereConditions(columnsEnum: "AssignmentColumns")
+        submissions: _ @whereHasConditions(columnsEnum: "SubmissionColumns")
+    ): [Assignment!]! @paginate(type: PAGINATOR, defaultCount: 10)
+
+    assignment (
+        where: _ @whereConditions(columnsEnum: "AssignmentColumns")
+        submissions: _ @whereHasConditions(columnsEnum: "SubmissionColumns")
+    ): Assignment @first
+}
+
+type Assignment {
+    id: ID
+    path: String
+    content: String
+    created_at: DateTime
+    updated_at: DateTime
+    course: Course @belongsTo
+    submissions: [Submission!]! @hasMany(type: PAGINATOR, defaultCount: 10)
+}
+
+enum AssignmentColumns {
+    ID
+    PATH
+    CONTENT
+    CREATED_AT
+    UPDATED_AT
+}
+
+#input CreateAssignmentInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    negotiable: Boolean
+#    status: Int
+#    user: CreateUserBelongsTo
+#    taxonomyContents: CreateTaxonomyContentBelongsToMany
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input UpdateAssignmentInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input CreateUserBelongsTo {
+#    connect: ID
+#}
+#input CreateTaxonomyContentBelongsToMany {
+#    connect: [ID!]
+#}
+#input CreateAttachmentBelongsToMany {
+#    connect: [ID!]
+#    create: [CreateAttachmentHasManyInputs]
+#    delete: [ID!]
+#    connect: [ID!]
+#    disconnect: [ID!]
+#}
+#input DeleteAssignmentInput {
+#    delete: ID
+#}
+#input CreateAttachmentHasManyInputs {
+#    path: String
+#    disk_name: String
+#    type: AttachmentTypes!
+#    file_name: String
+#    thumbnail: Boolean
+#}

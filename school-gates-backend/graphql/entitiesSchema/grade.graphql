@@ -1,0 +1,83 @@
+#extend type Mutation {
+#    createGrade(input: CreateGradeInput! @spread): Grade @create
+#
+#    updateGrade(id: ID!, input: UpdateGradeInput! @spread): Grade @update
+#
+#    deleteGrade(id: ID!): Grade @delete
+#
+#    restoreGrade(id: ID!): Grade @restore
+#}
+extend type Query {
+    grades (
+        orderBy: _ @orderBy(columnsEnum: "GradeColumns")
+        where: _ @whereConditions(columnsEnum: "GradeColumns")
+        courses: _ @whereHasConditions(columnsEnum: "CourseColumns")
+        students: _ @whereHasConditions(columnsEnum: "StudentColumns")
+    ): [Grade!]! @paginate(type: PAGINATOR, defaultCount: 10)
+
+    grade (
+        where: _ @whereConditions(columnsEnum: "GradeColumns")
+        courses: _ @whereHasConditions(columnsEnum: "CourseColumns")
+        students: _ @whereHasConditions(columnsEnum: "StudentColumns")
+    ): Grade @first
+}
+
+type Grade {
+    id: ID
+    name: String
+    gender: Gender
+    created_at: DateTime
+    updated_at: DateTime
+    courses: [Course!]! @hasMany(type: PAGINATOR, defaultCount: 10)
+    students: [Student!]! @hasMany(type: PAGINATOR, defaultCount: 10)
+    center: Center @belongsTo
+    inquiries: [Inquiry!]! @morphMany(type: PAGINATOR, defaultCount: 10)
+}
+
+enum GradeColumns {
+    ID
+    NAME
+    GENDER
+    CREATED_AT
+    UPDATED_AT
+}
+
+#input CreateGradeInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    negotiable: Boolean
+#    status: Int
+#    user: CreateUserBelongsTo
+#    taxonomyContents: CreateTaxonomyContentBelongsToMany
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input UpdateGradeInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input CreateUserBelongsTo {
+#    connect: ID
+#}
+#input CreateTaxonomyContentBelongsToMany {
+#    connect: [ID!]
+#}
+#input CreateAttachmentBelongsToMany {
+#    connect: [ID!]
+#    create: [CreateAttachmentHasManyInputs]
+#    delete: [ID!]
+#    connect: [ID!]
+#    disconnect: [ID!]
+#}
+#input DeleteGradeInput {
+#    delete: ID
+#}
+#input CreateAttachmentHasManyInputs {
+#    path: String
+#    disk_name: String
+#    type: AttachmentTypes!
+#    file_name: String
+#    thumbnail: Boolean
+#}

@@ -1,0 +1,83 @@
+#extend type Mutation {
+#    createAdministrator(input: CreateAdministratorInput! @spread): Administrator @create
+#
+#    updateAdministrator(id: ID!, input: UpdateAdministratorInput! @spread): Administrator @update
+#
+#    deleteAdministrator(id: ID!): Administrator @delete
+#
+#    restoreAdministrator(id: ID!): Administrator @restore
+#}
+extend type Query {
+    administrators (
+        orderBy: _ @orderBy(columnsEnum: "AdministratorColumns")
+        where: _ @whereConditions(columnsEnum: "AdministratorColumns")
+        inquiries: _ @whereHasConditions(columnsEnum: "InquiryColumns")
+    ): [Administrator!]! @paginate(type: PAGINATOR, defaultCount: 10)
+
+    administrator (
+        where: _ @whereConditions(columnsEnum: "AdministratorColumns")
+        inquiries: _ @whereHasConditions(columnsEnum: "InquiryColumns")
+    ): Administrator @first
+}
+
+type Administrator {
+    id: ID
+    name: String
+    email: String
+    role: String
+    created_at: DateTime
+    updated_at: DateTime
+    department: Department @belongsTo
+    inquiries: [Inquiry!]! @hasMany(type: PAGINATOR, defaultCount: 10)
+}
+
+enum AdministratorColumns {
+    ID
+    NAME
+    EMAIL
+    ROLE
+    CREATED_AT
+    UPDATED_AT
+}
+
+#input CreateAdministratorInput @validator {
+#    id: ID
+#    name: String
+#    email: String
+#    role: String
+#    created_at: DateTime
+#    updated_at: DateTime
+#    department: CreateBelongsTo
+#    comments:
+#    user:
+#    taxonomyContents: CreateTaxonomyContentBelongsToMany
+#    attachments: CreateAttachmentHasManyInputs
+#}
+#
+#input UpdateAdministratorInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#
+#input CreateTaxonomyContentBelongsToMany {
+#    connect: [ID!]
+#}
+#input CreateAttachmentBelongsToMany {
+#    connect: [ID!]
+#    create: [CreateAttachmentHasManyInputs]
+#    delete: [ID!]
+#    connect: [ID!]
+#    disconnect: [ID!]
+#}
+#input DeleteAdministratorInput {
+#    delete: ID
+#}
+#input CreateAttachmentHasManyInputs {
+#    path: String
+#    disk_name: String
+#    type: AttachmentTypes!
+#    file_name: String
+#    thumbnail: Boolean
+#}

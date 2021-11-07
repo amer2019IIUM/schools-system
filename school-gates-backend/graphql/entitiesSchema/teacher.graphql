@@ -1,0 +1,82 @@
+#extend type Mutation {
+#    createTeacher(input: CreateTeacherInput! @spread): Teacher @create
+#
+#    updateTeacher(id: ID!, input: UpdateTeacherInput! @spread): Teacher @update
+#
+#    deleteTeacher(id: ID!): Teacher @delete
+#
+#    restoreTeacher(id: ID!): Teacher @restore
+#}
+extend type Query {
+    teachers (
+        orderBy: _ @orderBy(columnsEnum: "TeacherColumns")
+        where: _ @whereConditions(columnsEnum: "TeacherColumns")
+        announcements: _ @whereHasConditions(columnsEnum: "AnnouncementColumns")
+    ): [Teacher!]! @paginate(type: PAGINATOR, defaultCount: 10)
+
+    teacher (
+        where: _ @whereConditions(columnsEnum: "TeacherColumns")
+        announcements: _ @whereHasConditions(columnsEnum: "AnnouncementColumns")
+    ): Teacher @first
+}
+
+type Teacher {
+    id: ID
+    name: String
+    gender: Gender
+    created_at: DateTime
+    updated_at: DateTime
+    courses: [Course!]! @belongsToMany(type: PAGINATOR, defaultCount: 10)
+    centers: [Center!]! @belongsToMany(type: PAGINATOR, defaultCount: 10)
+    announcements: [Announcement!]! @hasMany(type: PAGINATOR, defaultCount: 10)
+    reports: [Report!]! @morphMany(type: PAGINATOR, defaultCount: 10)
+    inquiries: [Inquiry!]! @morphMany(type: PAGINATOR, defaultCount: 10)
+}
+
+enum TeacherColumns {
+    ID
+    NAME
+    GENDER
+    CREATED_AT
+    UPDATED_AT
+}
+
+#input CreateTeacherInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    negotiable: Boolean
+#    status: Int
+#    user: CreateUserBelongsTo
+#    taxonomyContents: CreateTaxonomyContentBelongsToMany
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input UpdateTeacherInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input CreateUserBelongsTo {
+#    connect: ID
+#}
+#input CreateTaxonomyContentBelongsToMany {
+#    connect: [ID!]
+#}
+#input CreateAttachmentBelongsToMany {
+#    connect: [ID!]
+#    create: [CreateAttachmentHasManyInputs]
+#    delete: [ID!]
+#    connect: [ID!]
+#    disconnect: [ID!]
+#}
+#input DeleteTeacherInput {
+#    delete: ID
+#}
+#input CreateAttachmentHasManyInputs {
+#    path: String
+#    disk_name: String
+#    type: AttachmentTypes!
+#    file_name: String
+#    thumbnail: Boolean
+#}

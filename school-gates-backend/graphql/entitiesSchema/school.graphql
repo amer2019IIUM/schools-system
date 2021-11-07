@@ -1,0 +1,79 @@
+#extend type Mutation {
+#    createSchool(input: CreateSchoolInput! @spread): School @create
+#
+#    updateSchool(id: ID!, input: UpdateSchoolInput! @spread): School @update
+#
+#    deleteSchool(id: ID!): School @delete
+#
+#    restoreSchool(id: ID!): School @restore
+#}
+extend type Query {
+    schools (
+        orderBy: _ @orderBy(columnsEnum: "SchoolColumns")
+        where: _ @whereConditions(columnsEnum: "SchoolColumns")
+        departments: _ @whereHasConditions(columnsEnum: "DepartmentColumns")
+        centers: _ @whereHasConditions(columnsEnum: "CenterColumns")
+    ): [School!]! @paginate(type: PAGINATOR, defaultCount: 10)
+
+    school (
+        where: _ @whereConditions(columnsEnum: "SchoolColumns")
+        departments: _ @whereHasConditions(columnsEnum: "DepartmentColumns")
+        centers: _ @whereHasConditions(columnsEnum: "CenterColumns")
+    ): School @first
+}
+
+type School {
+    id: ID
+    name: String
+    created_at: DateTime
+    updated_at: DateTime
+    departments: [Department!]! @hasMany(type: PAGINATOR, defaultCount: 10)
+    centers: [Center!]! @hasMany(type: PAGINATOR, defaultCount: 10)
+}
+
+enum SchoolColumns {
+    ID
+    NAME
+    CREATED_AT
+    UPDATED_AT
+}
+
+#input CreateSchoolInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    negotiable: Boolean
+#    status: Int
+#    user: CreateUserBelongsTo
+#    taxonomyContents: CreateTaxonomyContentBelongsToMany
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input UpdateSchoolInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input CreateUserBelongsTo {
+#    connect: ID
+#}
+#input CreateTaxonomyContentBelongsToMany {
+#    connect: [ID!]
+#}
+#input CreateAttachmentBelongsToMany {
+#    connect: [ID!]
+#    create: [CreateAttachmentHasManyInputs]
+#    delete: [ID!]
+#    connect: [ID!]
+#    disconnect: [ID!]
+#}
+#input DeleteSchoolInput {
+#    delete: ID
+#}
+#input CreateAttachmentHasManyInputs {
+#    path: String
+#    disk_name: String
+#    type: AttachmentTypes!
+#    file_name: String
+#    thumbnail: Boolean
+#}

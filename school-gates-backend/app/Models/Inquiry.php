@@ -24,8 +24,8 @@ class Inquiry extends Model
         'inquiryable_id',
         'inquiryable_type',
         'administrator_id',
-        'doable_id',
-        'doable_type',
+        'createable_id',
+        'createable_type',
     ];
 
 
@@ -48,7 +48,7 @@ class Inquiry extends Model
     /**
      * @return MorphTo
      */
-    public function doable(): MorphTo
+    public function createable(): MorphTo
     {
         return $this->morphTo();
     }

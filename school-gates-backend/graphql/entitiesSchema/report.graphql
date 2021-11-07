@@ -1,0 +1,75 @@
+#extend type Mutation {
+#    createReport(input: CreateReportInput! @spread): Report @create
+#
+#    updateReport(id: ID!, input: UpdateReportInput! @spread): Report @update
+#
+#    deleteReport(id: ID!): Report @delete
+#
+#    restoreReport(id: ID!): Report @restore
+#}
+extend type Query {
+    reports (
+        orderBy: _ @orderBy(columnsEnum: "ReportColumns")
+        where: _ @whereConditions(columnsEnum: "ReportColumns")
+    ): [Report!]! @paginate(type: PAGINATOR, defaultCount: 10)
+
+    report (
+        where: _ @whereConditions(columnsEnum: "ReportColumns")
+    ): Report @first
+}
+
+type Report {
+    id: ID
+    body: String
+    created_at: DateTime
+    updated_at: DateTime
+    reportable: Reportable @morphTo
+}
+union Reportable = Teacher | Student
+
+enum ReportColumns {
+    ID
+    BODY
+    CREATED_AT
+    UPDATED_AT
+}
+
+#input CreateReportInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    negotiable: Boolean
+#    status: Int
+#    user: CreateUserBelongsTo
+#    taxonomyContents: CreateTaxonomyContentBelongsToMany
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input UpdateReportInput @validator {
+#    title: String
+#    description: String
+#    price: Float
+#    attachments: CreateAttachmentBelongsToMany
+#}
+#input CreateUserBelongsTo {
+#    connect: ID
+#}
+#input CreateTaxonomyContentBelongsToMany {
+#    connect: [ID!]
+#}
+#input CreateAttachmentBelongsToMany {
+#    connect: [ID!]
+#    create: [CreateAttachmentHasManyInputs]
+#    delete: [ID!]
+#    connect: [ID!]
+#    disconnect: [ID!]
+#}
+#input DeleteReportInput {
+#    delete: ID
+#}
+#input CreateAttachmentHasManyInputs {
+#    path: String
+#    disk_name: String
+#    type: AttachmentTypes!
+#    file_name: String
+#    thumbnail: Boolean
+#}

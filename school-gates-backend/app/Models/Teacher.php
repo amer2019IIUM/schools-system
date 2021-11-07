@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\HasInquiryCreator;
+use App\Traits\HasReport;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  *
  */
 class Teacher extends Model
 {
-    use HasFactory;
+    use HasFactory, HasInquiryCreator, HasReport;
 
     /**
      * The attributes that are mass assignable.
@@ -48,21 +49,5 @@ class Teacher extends Model
     public function announcements(): HasMany
     {
         return $this->hasMany( Announcement::class );
-    }
-
-    /**
-     * @return MorphMany
-     */
-    public function reports(): MorphMany
-    {
-        return $this->morphMany( Report::class, 'reportable' );
-    }
-
-    /**
-     * @return MorphMany
-     */
-    public function inquiries(): MorphMany
-    {
-        return $this->morphMany( Inquiry::class, 'doable' );
     }
 }
