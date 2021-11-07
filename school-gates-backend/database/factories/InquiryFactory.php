@@ -27,8 +27,8 @@ class InquiryFactory extends Factory
             'inquiryable_id' => $this->faker->numberBetween(-10000, 10000),
             'inquiryable_type' => $this->faker->word,
             'administrator_id' => $this->faker->numberBetween(-10000, 10000),
-            'doable_id' => $this->faker->numberBetween(-10000, 10000),
-            'doable_type' => $this->faker->numberBetween(-10000, 10000),
+            'createable_id' => $this->faker->numberBetween(-10000, 10000),
+            'createable_type' => $this->faker->numberBetween(-10000, 10000),
         ];
     }
 }
