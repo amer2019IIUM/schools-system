@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Department;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DepartmentSeeder extends Seeder
 {
@@ -14,6 +15,13 @@ class DepartmentSeeder extends Seeder
      */
     public function run()
     {
-        Department::factory()->count(5)->create();
-    }
+        DB::table('departments')->delete();
+
+        $departments = array(
+            array('id' => '1','name'=>'الارشاد الاكاديمي', 'school_id' => '1'),
+            array('id' => '2','name'=>'الادارة المدرسية', 'school_id' => '1' ),
+            array('id' => '3','name'=>'الدعم الفني', 'school_id' => '1'),
+        );
+        DB::table('departments')->insert($departments);
+        }
 }
