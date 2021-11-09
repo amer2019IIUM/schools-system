@@ -15,6 +15,7 @@ class CreateAnnouncementsTable extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
             $table->text('body');
             $table->string('path')->nullable();
             $table->enum('type', ["examinations schedule","general","meeting"]);
