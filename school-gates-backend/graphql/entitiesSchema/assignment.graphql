@@ -8,13 +8,13 @@
 #    restoreAssignment(id: ID!): Assignment @restore
 #}
 extend type Query {
-    assignments (
+    assignments(
         orderBy: _ @orderBy(columnsEnum: "AssignmentColumns")
         where: _ @whereConditions(columnsEnum: "AssignmentColumns")
         submissions: _ @whereHasConditions(columnsEnum: "SubmissionColumns")
     ): [Assignment!]! @paginate(type: PAGINATOR, defaultCount: 10)
 
-    assignment (
+    assignment(
         where: _ @whereConditions(columnsEnum: "AssignmentColumns")
         submissions: _ @whereHasConditions(columnsEnum: "SubmissionColumns")
     ): Assignment @first
@@ -22,6 +22,7 @@ extend type Query {
 
 type Assignment {
     id: ID
+    title: String
     path: String
     content: String
     created_at: DateTime
