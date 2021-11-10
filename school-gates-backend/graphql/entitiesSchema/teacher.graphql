@@ -8,13 +8,13 @@
 #    restoreTeacher(id: ID!): Teacher @restore
 #}
 extend type Query {
-    teachers (
+    teachers(
         orderBy: _ @orderBy(columnsEnum: "TeacherColumns")
         where: _ @whereConditions(columnsEnum: "TeacherColumns")
         announcements: _ @whereHasConditions(columnsEnum: "AnnouncementColumns")
     ): [Teacher!]! @paginate(type: PAGINATOR, defaultCount: 10)
 
-    teacher (
+    teacher(
         where: _ @whereConditions(columnsEnum: "TeacherColumns")
         announcements: _ @whereHasConditions(columnsEnum: "AnnouncementColumns")
     ): Teacher @first
@@ -23,6 +23,9 @@ extend type Query {
 type Teacher {
     id: ID
     name: String
+    passport: String
+    teams_email: String
+    password: String
     gender: Gender
     created_at: DateTime
     updated_at: DateTime

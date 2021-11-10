@@ -23,9 +23,21 @@ class Teacher extends Model
      */
     protected $fillable = [
         'name',
+        'passport',
+        'email',
         'gender',
+        'password'
     ];
 
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
+    ];
 
     /**
      * @return BelongsToMany

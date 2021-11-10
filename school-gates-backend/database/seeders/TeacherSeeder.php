@@ -18,8 +18,8 @@ class TeacherSeeder extends Seeder
         DB::table('teachers')->delete();
   
         $teachers = array(
-            array('id' => '1','name'=>'حسام الفرا', 'gender' => 'm' ),
-            array('id' => '2','title'=>'ليلى', 'gender' => 'f'),
+            array('id' => '1','name'=>'حسام الفرا', 'passport'=>'0662356','teams_email'=>'team@outlook.com','password'=>'password','gender' => 'm' ),
+            array('id' => '2','name'=>'ليلى',  'passport'=>'60345','teams_email'=>'team2@outlook.com','password'=>'password','gender' => 'f'),
           );
         DB::table('teachers')->insert($teachers);    
         }
