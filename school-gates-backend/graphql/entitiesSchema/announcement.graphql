@@ -8,18 +8,19 @@
 #    restoreAnnouncement(id: ID!): Announcement @restore
 #}
 extend type Query {
-    announcements (
+    announcements(
         orderBy: _ @orderBy(columnsEnum: "AnnouncementColumns")
         where: _ @whereConditions(columnsEnum: "AnnouncementColumns")
     ): [Announcement!]! @paginate(type: PAGINATOR, defaultCount: 10)
 
-    announcement (
+    announcement(
         where: _ @whereConditions(columnsEnum: "AnnouncementColumns")
     ): Announcement @first
 }
 
 type Announcement {
     id: ID!
+    title: String
     body: String
     path: String!
     type: AnnouncementType
