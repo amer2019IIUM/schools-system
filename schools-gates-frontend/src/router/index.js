@@ -10,11 +10,17 @@ import StudentExamSchedule from '../components/student-forms/StudentExamSchedule
 import SubmitAssignmentS from '../components/student-forms/SubmitAssignmentS.vue'
 import CheckAssigmentT from '../components/teacher-forms/CheckAssigmentT.vue'
 import TeacherProfile from "../pages/TeacherProfile.vue"
+import Landing from "../views/Landing.vue"
 
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/',
+    name: 'landing-page',
+    component: Landing
+  },
   {
     path: '/teacher-services',
     name: 'teacher-page',

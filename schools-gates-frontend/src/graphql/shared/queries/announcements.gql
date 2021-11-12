@@ -1,0 +1,10 @@
+query {
+  announcements {
+    data {
+      id
+      title
+      body
+      path
+    }
+  }
+}

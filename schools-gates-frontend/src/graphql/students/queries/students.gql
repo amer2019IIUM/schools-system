@@ -1,0 +1,23 @@
+query {
+  students {
+    data {
+      id
+      name
+      passport
+      gender
+      password
+      city
+      phone_number_1
+      teams_email
+      personal_email
+      grade {
+        id
+        name
+        center {
+          id
+          name
+        }
+      }
+    }
+  }
+}

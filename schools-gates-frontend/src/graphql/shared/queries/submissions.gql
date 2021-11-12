@@ -1,0 +1,10 @@
+query {
+  submissions {
+    data {
+      id
+      title
+      type
+      path
+    }
+  }
+}

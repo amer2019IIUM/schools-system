@@ -1,0 +1,11 @@
+query {
+  assignments {
+    data {
+      id
+      title
+      path
+      content
+      created_at
+    }
+  }
+}

@@ -1,0 +1,10 @@
+query {
+  centers {
+    data {
+      id
+      name
+      country
+      created_at
+    }
+  }
+}

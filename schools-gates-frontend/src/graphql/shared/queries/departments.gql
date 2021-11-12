@@ -1,0 +1,9 @@
+query {
+  departments {
+    data {
+      id
+      name
+      created_at
+    }
+  }
+}

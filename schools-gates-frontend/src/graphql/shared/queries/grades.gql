@@ -1,0 +1,10 @@
+query {
+  grades {
+    data {
+      id
+      name
+      gender
+      created_at
+    }
+  }
+}

@@ -1,0 +1,9 @@
+query {
+  courses {
+    data {
+      id
+      name
+      created_at
+    }
+  }
+}

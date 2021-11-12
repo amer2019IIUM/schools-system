@@ -31,7 +31,7 @@
                         <v-img
                           class="white--text align-end"
                           height="200px"
-                          src="https://vstedu.azureedge.net/v9/content/homepage/img/logo_ex.png"
+                          :src="Logo"
                         >
                         </v-img>
                         <hr />
@@ -129,13 +129,14 @@
 
 <script>
 import InquiriesS from "../components/student-forms/InquiriesS.vue";
-
+import Logo from "../assets/logo.png";
 export default {
   components: {
     InquiriesS,
   },
   name: "StudentsServices",
   data: () => ({
+    Logo,
     studentInquiries: false,
     services: [
       "معرفة التكليفات",

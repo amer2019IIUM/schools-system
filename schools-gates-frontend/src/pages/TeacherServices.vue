@@ -31,7 +31,7 @@
                         <v-img
                           class="white--text align-end"
                           height="200px"
-                          src="https://vstedu.azureedge.net/v9/content/homepage/img/logo_ex.png"
+                          :src="Logo"
                         >
                         </v-img>
                         <hr />
@@ -147,6 +147,7 @@
 </template>
 
 <script>
+import Logo from "../assets/logo.png";
 import UploadAssigment from "../components/teacher-forms/UploadAssigmentT.vue";
 import AnnouncementT from "../components/teacher-forms/AnnouncementT.vue";
 import MeetingsT from "../components/teacher-forms/MeetingsT.vue";
@@ -162,6 +163,7 @@ export default {
   },
   name: "TeacherServices",
   data: () => ({
+    Logo,
     uploadAssigmentDialog: false,
     announcementDialog: false,
     meetingDialog: false,

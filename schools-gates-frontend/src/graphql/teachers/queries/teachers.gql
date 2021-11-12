@@ -1,0 +1,13 @@
+query {
+  teachers {
+    data {
+      id
+      name
+      passport
+      teams_email
+      created_at
+      gender
+      created_at
+    }
+  }
+}

@@ -1,0 +1,7 @@
+query{
+  reports{
+    data{
+       id
+        }
+  }
+}

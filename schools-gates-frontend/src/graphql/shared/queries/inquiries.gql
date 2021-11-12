@@ -1,0 +1,8 @@
+query {
+  inquiries {
+    data {
+      id
+      body
+    }
+  }
+}

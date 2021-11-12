@@ -1,0 +1,9 @@
+query {
+  schools {
+    data {
+      id
+      name
+      created_at
+    }
+  }
+}

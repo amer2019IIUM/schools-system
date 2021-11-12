@@ -3,7 +3,7 @@
     <v-app-bar color="teal" app>
       <v-menu offset-y>
         <v-list three-line width="250">
-          <template v-for="(item, index) in items">
+          <template v-for="(item, index) in [1, 2, 3]">
             <v-subheader
               v-if="item.header"
               :key="item.header"

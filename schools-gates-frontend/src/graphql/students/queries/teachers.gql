@@ -1,0 +1,10 @@
+query {
+  teachers {
+    data {
+      id
+      name
+      gender
+      created_at
+    }
+  }
+}
